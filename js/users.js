@@ -84,7 +84,8 @@ const usersArray = [
       active: false,
       password: 'password505',
       bornDate: new Date('1978-12-19').getTime(),
-      location: 'Dallas, TX'
+      location: 'Dallas, TX',
+      image: "https://m.media-amazon.com/images/I/81wNRtDaTXL.png"
     },
     {
       fullname: 'Isabella Taylor',
@@ -109,30 +110,30 @@ const usersArray = [
       image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/b/b7/Mk8iconbowser.png?width=325'
     }
 ];
+
 // Obtener el body de la tabla
 const tableBody = document.getElementById('table-body')
 
-console.log(tableBody)
+
 // Iterar el array y agregar un tr por cada alumno que tengamos. 
-
 usersArray.forEach(user => {
-
     tableBody.innerHTML += `
-    <tr class="table-body">
-        <td class="user-image">
-            <img src="https://m.media-amazon.com/images/I/81wNRtDaTXL.png" alt="Imagen de prueba">
-        </td>
-        <td class="user-name">${user.fullname}</td>
-        <td class="user-email">${user.email}</td>
-        <td class="user-location">${user.location}</td>
-        <td class="user-age">${user.age}</td>
-        <td class="user-date">${user.bornDate}</td>
-    </tr>`
+      <tr class="table-body">
+          <td class="user-image">
+              <img src="${user.image}" alt="${user.fullname} avatar">
+          </td>
+          <td class="user-name">${user.fullname}</td>
+          <td class="user-email">${user.email}</td>
+          <td class="user-location">${user.location}</td>
+          <td class="user-age">${user.age}</td>
 
+          <td class="user-date">${ formatDate(user.bornDate) }</td>
 
-
-
+      </tr>`
 })
+
+
+
 
 
 
