@@ -21,15 +21,17 @@ body {
         padding: 10px;
     }
     .table-body {
-        tr {
-            &:nth-child(even) {
-                background-color: #333;
-            }
+        .table-row {
+            
             td {
                 padding: 10px;
             }
         }
+        
     }
+}
+.table-row:nth-child(even) {
+    background-color: #3d3d3d4a;
 }
 
 .user-table :is(th, td) {
@@ -37,10 +39,11 @@ body {
         border: 1px solid rgb(244, 85, 188);
 }
 
-.table-body .user-image img {
+.table-row .user-image img {
     width: 70px;
     height: 70px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .action-btn {
@@ -70,4 +73,44 @@ body {
         border-radius: 3px;
         border-bottom: 3px solid crimson;
     }
+}
+
+.admin-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: .5rem;
+}
+#user-form {
+    max-width: 430px;
+    padding: 25px;
+    background-color: #111;
+    margin-inline: auto;
+}
+.input-group {
+    margin: 0 auto;
+    margin-bottom: .75rem;
+    display: flex;
+    flex-direction: column;
+
+    :is(input, textarea, select) {
+        padding: .375rem .675rem;
+        font-size: 1rem;
+        outline: none;
+        border: none;
+        border-radius: 3px;
+        border-bottom: 3px solid crimson;
+    }
+}
+
+.btn-form {
+    background-color: crimson;
+    color: white;
+    padding: .5rem .75rem;
+    border-radius: 3px;
+    cursor: pointer;
+    border: none;
+
+}
+.mb {
+    margin-bottom: .75rem;
 }

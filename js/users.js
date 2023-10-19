@@ -6,7 +6,7 @@ const usersArray = [
       id: '1',
       active: true,
       password: 'password123',
-      bornDate: new Date('1993-01-01').getTime(),
+      bornDate: 725846400000,
       location: 'New York, NY',
       image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/7/71/Mk8iconyoshi.png?width=1280'
     },
@@ -65,40 +65,116 @@ const usersArray = [
       location: 'San Francisco, CA',
       image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/b/bf/Mk8iconmario.png?width=325'
     },
-    {
-      fullname: 'Samantha Davis',
-      age: 22,
-      email: 'samantha.davis@example.com',
-      id: '7',
-      active: true,
-      password: 'password404',
-      bornDate: new Date('2001-11-11').getTime(),
-      location: 'Boston, MA',
-      image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/2/2d/Mk8icondk.png?width=325'
-    },
-    {
-      fullname: 'James Moore',
-      age: 45,
-      email: 'james.moore@example.com',
-      id: '8',
-      active: false,
-      password: 'password505',
-      bornDate: new Date('1978-12-19').getTime(),
-      location: 'Dallas, TX',
-      image: "https://m.media-amazon.com/images/I/81wNRtDaTXL.png"
-    },
-    {
-      fullname: 'Isabella Taylor',
-      age: 29,
-      email: 'isabella.taylor@example.com',
-      id: '9',
-      active: true,
-      password: 'password606',
-      bornDate: new Date('1994-06-24').getTime(),
-      location: 'San Diego, CA',
-      image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/3/3a/Mk8iconkoopa.png?width=325'
-    },
-    {
+    // {
+    //   fullname: 'Samantha Davis',
+    //   age: 22,
+    //   email: 'samantha.davis@example.com',
+    //   id: '7',
+    //   active: true,
+    //   password: 'password404',
+    //   bornDate: new Date('2001-11-11').getTime(),
+    //   location: 'Boston, MA',
+    //   image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/2/2d/Mk8icondk.png?width=325'
+    // },
+    // {
+    //   fullname: 'James Moore',
+    //   age: 45,
+    //   email: 'james.moore@example.com',
+    //   id: '8',
+    //   active: false,
+    //   password: 'password505',
+    //   bornDate: new Date('1978-12-19').getTime(),
+    //   location: 'Dallas, TX',
+    //   image: "https://m.media-amazon.com/images/I/81wNRtDaTXL.png"
+    // },
+    // {
+    //   fullname: 'Isabella Taylor',
+    //   age: 29,
+    //   email: 'isabella.taylor@example.com',
+    //   id: '9',
+    //   active: true,
+    //   password: 'password606',
+    //   bornDate: new Date('1994-06-24').getTime(),
+    //   location: 'San Diego, CA',
+    //   image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/3/3a/Mk8iconkoopa.png?width=325'
+    // },
+    // {
+    //   fullname: 'Ethan Johnson',
+    //   age: 31,
+    //   email: 'ethan.johnson@example.com',
+    //   id: '10',
+    //   active: false,
+    //   password: 'password707',
+    //   bornDate: new Date('1992-03-03').getTime(),
+    //   location: 'Denver, CO',
+    //   image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/b/b7/Mk8iconbowser.png?width=325'
+    // }
+];
+
+console.log(usersArray)
+
+// Obtener el body de la tabla
+const tableBody = document.getElementById('table-body')
+const searchInput = document.querySelector('#search')
+const userForm = document.querySelector("form#user-form")
+
+
+
+
+
+
+
+
+// Escuchamos el evento submit en el formulario
+userForm.addEventListener("submit", (evt) => {
+
+  evt.preventDefault()
+
+  const el = evt.target.elements;
+
+  //Debería cortar la ejecución de la función callback del evento submit
+    // !Password y password2 sean distintos
+    if(el.password.value !== el.password2.value ) {
+      alert(`Las contraseñas no coiciden`)
+      return;
+    }
+
+    // !Email ya existe
+    const userExist = usersArray.find((user) => {
+      if(user.email === el.email.value) {
+        return true
+      }
+    })
+
+    if(userExist) {
+      alert(`El correo ya se encuentra registrado`)
+      return
+    } 
+
+
+
+
+
+
+  const usuarioNuevo = {
+    fullname: el.nombreCompleto.value,
+    age: el.age.valueAsNumber, //Obtengo el valor numérico
+    email: el.email.value,
+    password: el.contrasena.value,
+    active: el.active.checked,
+    bornDate: new Date(el.bornDate.value).getTime(),
+    location: el.location.value,
+    id: crypto.randomUUID(),
+    image: el.image.value
+  } 
+
+  console.log(usuarioNuevo)
+
+  usersArray.push(usuarioNuevo)
+
+  pintarUsuarios(usersArray)
+  /*
+  {
       fullname: 'Ethan Johnson',
       age: 31,
       email: 'ethan.johnson@example.com',
@@ -109,11 +185,25 @@ const usersArray = [
       location: 'Denver, CO',
       image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/b/b7/Mk8iconbowser.png?width=325'
     }
-];
+  
+  
+  
+  */
 
-// Obtener el body de la tabla
-const tableBody = document.getElementById('table-body')
-const searchInput = document.querySelector('#search')
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Filtro de usuarios
 //Escuchar cuando el usuario presiona una tecla en el input search
@@ -151,7 +241,7 @@ function pintarUsuarios(arrayPintar) {
   arrayPintar.forEach( (user, indiceActual) => {
 
       tableBody.innerHTML += `
-        <tr class="table-body">
+        <tr class="table-row">
             <td class="user-image">
                 <img src="${user.image}" alt="${user.fullname} avatar">
             </td>
@@ -178,10 +268,8 @@ pintarUsuarios(usersArray)
 
 
 function borrarUsuario(indice) {
-
   usersArray.splice(indice, 1)
   pintarUsuarios(usersArray)
-
 }
 
 
