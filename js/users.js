@@ -120,11 +120,6 @@ const userForm = document.querySelector("form#user-form")
 
 
 
-
-
-
-
-
 // Escuchamos el evento submit en el formulario
 userForm.addEventListener("submit", (evt) => {
 
@@ -133,27 +128,23 @@ userForm.addEventListener("submit", (evt) => {
   const el = evt.target.elements;
 
   //Debería cortar la ejecución de la función callback del evento submit
-    // !Password y password2 sean distintos
-    if(el.password.value !== el.password2.value ) {
-      alert(`Las contraseñas no coiciden`)
-      return;
+  // !Password y password2 sean distintos
+  if(el.password.value !== el.password2.value ) {
+    alert(`Las contraseñas no coiciden`)
+    return;
+  }
+
+  // !Email ya existe
+  const userExist = usersArray.find((user) => {
+    if(user.email === el.email.value) {
+      return true
     }
+  })
 
-    // !Email ya existe
-    const userExist = usersArray.find((user) => {
-      if(user.email === el.email.value) {
-        return true
-      }
-    })
-
-    if(userExist) {
-      alert(`El correo ya se encuentra registrado`)
-      return
-    } 
-
-
-
-
+  if(userExist) {
+    alert(`El correo ya se encuentra registrado`)
+    return
+  } 
 
 
   const usuarioNuevo = {
@@ -164,45 +155,17 @@ userForm.addEventListener("submit", (evt) => {
     active: el.active.checked,
     bornDate: new Date(el.bornDate.value).getTime(),
     location: el.location.value,
+
     id: crypto.randomUUID(),
+
     image: el.image.value
   } 
-
-  console.log(usuarioNuevo)
 
   usersArray.push(usuarioNuevo)
 
   pintarUsuarios(usersArray)
-  /*
-  {
-      fullname: 'Ethan Johnson',
-      age: 31,
-      email: 'ethan.johnson@example.com',
-      id: '10',
-      active: false,
-      password: 'password707',
-      bornDate: new Date('1992-03-03').getTime(),
-      location: 'Denver, CO',
-      image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/b/b7/Mk8iconbowser.png?width=325'
-    }
-  
-  
-  
-  */
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Filtro de usuarios
@@ -257,6 +220,15 @@ function pintarUsuarios(arrayPintar) {
               <button class="action-btn btn-danger" title="Borrar usuario" onclick="borrarUsuario(${indiceActual})" >
                 <i class="fa-solid fa-trash-can"></i>
               </button>
+
+              <button class="action-btn" 
+                      title="Editar usuario"
+                      onclick="editarUsuario( '${user.id}')">
+
+                  <i class="fa-solid fa-pen-to-square"></i>
+
+              </button>
+
             </td>
         </tr>`
   })
@@ -272,14 +244,42 @@ function borrarUsuario(indice) {
   pintarUsuarios(usersArray)
 }
 
+// forEach, map, filter, findIndex, find, flat, flatMap, every, some
+
+
+function editarUsuario(idBuscar) {
+  // Buscar un usuario con id y obtenerlo
+  const userEdit = usersArray.find((usuario) => {
+
+    //deberia devolver un true, según la condición id que me enviaron === al del usuario que estoy iterando
+    if(usuario.id === idBuscar) {
+      return true
+    }
+
+
+
+  })
+
+  console.log(userEdit)
+
+
+  // Rellenar el formulario con los datos del usuario a editar
+  // Cambiar el nombre del botón a editar usuario
+  // Deshabilitar los input de contraseña 
+
+}
 
 
 
 
 
-
-
-
+const objeto = {
+  nombre: "Pepito",
+  apellido: "Perez",
+  saludar() {
+    console.log(`Hola mi nombre es Pepito`)
+  }
+}
 
 
 
