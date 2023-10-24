@@ -7,7 +7,7 @@ const usersArray = [
       active: true,
       password: 'password123',
       bornDate: 725846400000,
-      location: 'New York, NY',
+      location: 'La Luna',
       image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/7/71/Mk8iconyoshi.png?width=1280'
     },
     {
@@ -18,7 +18,7 @@ const usersArray = [
       active: false,
       password: 'password456',
       bornDate: new Date('1998-05-05').getTime(),
-      location: 'Los Angeles, CA',
+      location: 'Mendoza',
       image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/f/f5/Mk8icondaisy.png?width=1280'
     },
     {
@@ -29,7 +29,7 @@ const usersArray = [
       active: true,
       password: 'password789',
       bornDate: new Date('1988-08-08').getTime(),
-      location: 'Miami, FL',
+      location: 'Mendoza',
       image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/1/1d/Mk8icontoadette.png?width=325'
     },
     {
@@ -40,7 +40,7 @@ const usersArray = [
       active: false,
       password: 'password101',
       bornDate: new Date('1983-04-10').getTime(),
-      location: 'Chicago, IL',
+      location: 'San Luis',
       image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/d/d1/Mk8iconrosalina.png?width=1280'
     },
     {
@@ -51,7 +51,7 @@ const usersArray = [
       active: true,
       password: 'password202',
       bornDate: new Date('1995-02-15').getTime(),
-      location: 'Houston, TX',
+      location: 'Córdoba',
       image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/5/59/Mk8iconpeach.png?width=325'
     },
     {
@@ -62,7 +62,7 @@ const usersArray = [
       active: false,
       password: 'password303',
       bornDate: new Date('1989-07-07').getTime(),
-      location: 'San Francisco, CA',
+      location: 'Buenos Aires',
       image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/b/bf/Mk8iconmario.png?width=325'
     },
     // {
@@ -152,7 +152,10 @@ userForm.addEventListener("submit", (evt) => {
     age: el.age.valueAsNumber, //Obtengo el valor numérico
     email: el.email.value,
     password: el.contrasena.value,
+
     active: el.active.checked,
+
+
     bornDate: new Date(el.bornDate.value).getTime(),
     location: el.location.value,
 
@@ -247,6 +250,8 @@ function borrarUsuario(indice) {
 // forEach, map, filter, findIndex, find, flat, flatMap, every, some
 
 
+
+
 function editarUsuario(idBuscar) {
   // Buscar un usuario con id y obtenerlo
   const userEdit = usersArray.find((usuario) => {
@@ -256,30 +261,49 @@ function editarUsuario(idBuscar) {
       return true
     }
 
-
-
   })
+
+  //Indicar que el usuario no fue encontrado
+  if(!userEdit) {
+    Swal.fire('Error al editar', 'No se pudo editar el usuario', 'error')
+    return
+  }
 
   console.log(userEdit)
 
-
   // Rellenar el formulario con los datos del usuario a editar
+
+  const el = userForm.elements;
+
+  el.age.value = userEdit.age
+  el.nombreCompleto.value = userEdit.fullname
+  el.email.value = userEdit.email;
+  el.image.value = userEdit.image;
+  el.location.value = userEdit.location;
+  el.active.checked = userEdit.active;
+
+  el.contrasena.value = userEdit.password;
+  el.contrasena.disabled = true
+  el.contrasena2.value = userEdit.password;
+  el.contrasena2.disabled = true
+  //// fullname
+  //// email
+  //// image
+  // # location
+  //// active -> checked
+  //// ❌password
+  //// ❌repeat password
+  // ❌fecha
+  el.bornDate.value = formatInputDate(userEdit.bornDate)
+ 
+  console.log(formatInputDate(userEdit.bornDate))
+
   // Cambiar el nombre del botón a editar usuario
   // Deshabilitar los input de contraseña 
 
 }
 
 
-
-
-
-const objeto = {
-  nombre: "Pepito",
-  apellido: "Perez",
-  saludar() {
-    console.log(`Hola mi nombre es Pepito`)
-  }
-}
 
 
 
