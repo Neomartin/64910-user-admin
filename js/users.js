@@ -117,6 +117,7 @@ console.log(usersArray)
 const tableBody = document.getElementById('table-body')
 const searchInput = document.querySelector('#search')
 const userForm = document.querySelector("form#user-form")
+const submitBtn = userForm.querySelector('button[type=submit].btn-form')
 
 
 
@@ -135,41 +136,89 @@ userForm.addEventListener("submit", (evt) => {
   }
 
   // !Email ya existe
-  const userExist = usersArray.find((user) => {
-    if(user.email === el.email.value) {
-      return true
-    }
-  })
+  // const emailExist = usersArray.find((user) => {
+  //   if(user.email === el.email.value) {
+  //     return true
+  //   }
+  // })
 
-  if(userExist) {
-    alert(`El correo ya se encuentra registrado`)
-    return
-  } 
+  // if(emailExist) {
+  //   alert(`El correo ya se encuentra registrado`)
+  //   return
+  // }
+
+  // # If else convencional
+  // let id;
+  // if(el.id.value) {
+  //   id = el.id.value
+  // } else {
+  //   id = crypto.randomUUID()
+  // }
+
+  // # Operador ternario
+  //          condicion       true        false
+  const id = el.id.value ? el.id.value : crypto.randomUUID()
 
 
-  const usuarioNuevo = {
+  const user = {
     fullname: el.nombreCompleto.value,
     age: el.age.valueAsNumber, //Obtengo el valor numérico
     email: el.email.value,
     password: el.contrasena.value,
-
     active: el.active.checked,
-
-
     bornDate: new Date(el.bornDate.value).getTime(),
     location: el.location.value,
-
-    id: crypto.randomUUID(),
-
+    id: id,
     image: el.image.value
   } 
 
-  usersArray.push(usuarioNuevo)
+  // Tenemos 2 posibles acciones a realizar
+  //  a- Al estar editando debería reemplazar el usuario a editar con sus información actualizada
+  //  b- Agregue un usuario nuevo
 
+  // Pregunto si tengo id para saber si estoy editando o no
+  if(el.id.value) {
+    // -Editando
+    const indice = usersArray.findIndex(usuario => {
+
+      if(usuario.id === el.id.value) {
+        return true
+      }
+    })
+    //reemplazo el usuario con los datos nuevos del formulario
+    usersArray[indice] = user
+
+    Swal.fire({
+      title: 'Usuario Editado',
+      text: 'Los datos del usuario fueron actualizados correctamente',
+      icon: 'success',
+      timer: 1000
+    })
+    //al modificar el array necesito refrescar la vista
+  } else {
+    //Agregando un usuario nuevo
+    usersArray.push(user)
+    Swal.fire({
+      title: 'Usuario Agregado',
+      text: 'Usuario se creo correctamente',
+      icon: 'success',
+      timer: 1000
+    })
+  }
   pintarUsuarios(usersArray)
+  resetearFormulario()
 
 })
 
+function resetearFormulario() {
+
+  userForm.reset() //Reseteo el formulario
+  userForm.elements.password.disabled = false; //Activo si estaban desactivados los input password
+  userForm.elements.password2.disabled = false;
+  submitBtn.classList.remove('btn-edit') //Remuevo la clase editar
+  submitBtn.innerText = 'Agregar usuario' //Vuelvo el texto del botón a su valor por defecto
+  userForm.elements.nombreCompleto.focus()
+}
 
 // Filtro de usuarios
 //Escuchar cuando el usuario presiona una tecla en el input search
@@ -275,6 +324,8 @@ function editarUsuario(idBuscar) {
 
   const el = userForm.elements;
 
+  el.id.value = userEdit.id;
+
   el.age.value = userEdit.age
   el.nombreCompleto.value = userEdit.fullname
   el.email.value = userEdit.email;
@@ -293,13 +344,18 @@ function editarUsuario(idBuscar) {
   //// active -> checked
   //// ❌password
   //// ❌repeat password
-  // ❌fecha
+  //// ❌fecha
   el.bornDate.value = formatInputDate(userEdit.bornDate)
- 
-  console.log(formatInputDate(userEdit.bornDate))
+  
+  // -Cambiar el nombre del botón a editar usuario
 
-  // Cambiar el nombre del botón a editar usuario
-  // Deshabilitar los input de contraseña 
+  submitBtn.classList.add('btn-edit');
+  submitBtn.innerText = 'Editar usuario'
+  // Deshabilitar los input de contraseña
+
+  
+
+  
 
 }
 
