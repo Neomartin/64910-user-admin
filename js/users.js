@@ -111,8 +111,6 @@ const usersArray = [
     // }
 ];
 
-console.log(usersArray)
-
 // Obtener el body de la tabla
 const tableBody = document.getElementById('table-body')
 const searchInput = document.querySelector('#search')
@@ -136,16 +134,19 @@ userForm.addEventListener("submit", (evt) => {
   }
 
   // !Email ya existe
-  // const emailExist = usersArray.find((user) => {
-  //   if(user.email === el.email.value) {
-  //     return true
-  //   }
-  // })
+  const emailExist = usersArray.find((user) => {
+    if(user.email === el.email.value) {
+      return true
+    }
+  })
 
-  // if(emailExist) {
-  //   alert(`El correo ya se encuentra registrado`)
-  //   return
-  // }
+  if(emailExist && el.id.value !== emailExist.id) {
+    Swal.fire({
+      title: 'El correo ya existe',
+      icon: 'error'
+    })
+    return
+  }
 
   // # If else convencional
   // let id;
@@ -269,7 +270,8 @@ function pintarUsuarios(arrayPintar) {
 
             <td>
 
-              <button class="action-btn btn-danger" title="Borrar usuario" onclick="borrarUsuario(${indiceActual})" >
+              <button class="action-btn btn-danger" title="Borrar usuario" 
+                      onclick="borrarUsuario(  '${user.id}', '${user.fullname}'  )" >
                 <i class="fa-solid fa-trash-can"></i>
               </button>
 
@@ -291,9 +293,19 @@ function pintarUsuarios(arrayPintar) {
 pintarUsuarios(usersArray)
 
 
-function borrarUsuario(indice) {
-  usersArray.splice(indice, 1)
-  pintarUsuarios(usersArray)
+function borrarUsuario(ID, nombre) {
+
+  const confirmDelete = confirm(`Realmente desea borrar este usuario ${nombre}`)
+
+  if(confirmDelete) {
+
+    const indice = usersArray.findIndex(user => user.id === ID)
+
+    usersArray.splice(indice, 1)
+    pintarUsuarios(usersArray)
+
+  }
+  
 }
 
 // forEach, map, filter, findIndex, find, flat, flatMap, every, some
