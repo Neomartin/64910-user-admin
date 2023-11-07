@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .container {
     max-width: 1200px;
 }
@@ -9,6 +15,27 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); */
     font-family: Arial, Helvetica, sans-serif;
     color: white;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(29, 116, 203);
+    color: white;
+}
+.header a {
+    color: white;
+    text-decoration: none;
+    padding: 1rem 1.25rem;
+    display: inline-block;
+    &:hover {
+        background-color: rgb(19, 68, 117);
+    }
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem;
 }
 
 .user-table {
