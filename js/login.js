@@ -54,8 +54,6 @@ loginForm.addEventListener("submit", (evt) => {
         text: 'Será redireccionado en un momento'
     })
 
-    console.log('Iniciando timeout')
-
     setTimeout(function(){
 
         window.location.href = '/index.html'
