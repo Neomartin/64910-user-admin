@@ -23,11 +23,18 @@ body {
     background-color: rgb(29, 116, 203);
     color: white;
 }
-.header a {
+.header .header-link {
     color: white;
     text-decoration: none;
     padding: 1rem 1.25rem;
     display: inline-block;
+
+    background-color: rgb(29, 116, 203);
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    cursor: pointer;
+    
     &:hover {
         background-color: rgb(19, 68, 117);
     }
@@ -35,7 +42,15 @@ body {
 .user-info {
     display: flex;
     align-items: center;
-    padding: 1rem 1.25rem;
+    /* padding: 1rem 1.25rem; */
+
+    .user-profile-picure {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-inline: .75rem .25rem;
+    }
 }
 
 .user-table {
